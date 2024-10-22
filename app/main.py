@@ -1,22 +1,16 @@
-from typing import Annotated
-from fastapi import FastAPI, Form, Request
-from pydantic import BaseModel
+from fastapi import Depends, FastAPI
 
-"""
-сслыка на тестовое задание
+from .routers import index_routes, users
 
-https://docs.google.com/document/d/1WtMrIstCOd-ukMSTakjmIl7zCF6Px5S8p2txGsWb0vA/edit?tab=t.0
-"""
-
-#иницилизаяция приложение
 app = FastAPI()
 
+app.include_router(users.router)
+app.include_router(index_routes.router)
 
-class FormData(BaseModel):
-    username: str
-    password: str
-    
-## роутинги
+
+
 @app.get("/")
-def home_page():
-    return {"Hello": "World"}
+async def root():
+    return {"message": "Hello Bigger Applications!"}
+
+
